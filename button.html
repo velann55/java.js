@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: sans-serif;
+    background-color: #f5f5f5;
+  }
+
+  #colorBtn {
+    background-color: red;
+    color: white;
+    padding: 15px 30px;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.3s ease;
+  }
+
+  #colorBtn.clicked {
+    animation: pulse 0.4s ease;
+  }
+
+  @keyframes pulse {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.15); }
+    100% { transform: scale(1); }
+  }
+
+  #message {
+    margin-top: 20px;
+    font-size: 18px;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    text-align: center;
+  }
+
+  #message.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  #randomNum {
+    font-weight: bold;
+    font-size: 22px;
+    color: #333;
+  }
+</style>
+</head>
+<body>
+
+  <button id="colorBtn">Click Me</button>
+  <div id="message"></div>
+
+  <script>
+    const btn = document.getElementById('colorBtn');
+    const message = document.getElementById('message');
+    let isRed = true;
+
+    btn.addEventListener('click', function () {
+      // Toggle color
+      btn.style.backgroundColor = isRed ? 'green' : 'red';
+      isRed = !isRed;
+
+      // Generate random decimal number between 1 and 100 (2 decimal places)
+      const randomNum = (Math.random() * 99 + 1).toFixed(2);
+
+      // Update message text with color change + random number
+      const colorText = isRed ? "Back to red!" : "Color changed to green! 🎉";
+      message.innerHTML = `${colorText}<br>Your random number: <span id="randomNum">${randomNum}</span>`;
+
+      // Trigger pulse animation on button
+      btn.classList.remove('clicked');
+      void btn.offsetWidth;
+      btn.classList.add('clicked');
+
+      // Trigger fade-in animation on message
+      message.classList.remove('show');
+      void message.offsetWidth;
+      message.classList.add('show');
+    });
+  </script>
+
+</body>
+</html>
